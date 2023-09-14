@@ -104,6 +104,9 @@ public class BigFraction {
     return this.denom;
   } // denominator()
 
+  /**
+   * Divides Big Fractions.
+   */
   public BigFraction divide(BigFraction divideMe){
     BigInteger resultNum, resultDenom;
 
@@ -111,12 +114,12 @@ public class BigFraction {
     resultDenom = this.denom.divide(divideMe.denom);
 
     return new BigFraction(resultNum, resultDenom);
-  }
+  } // divide(BigFraction divideMe)
 
   /**
    * Returns values as a fraction.
    */
-    public BigFraction fractional(){
+  public BigFraction fractional(){
     BigInteger resultNum, resultDenom;
 
     resultNum = this.num.mod(this.denom);
@@ -128,7 +131,7 @@ public class BigFraction {
   /**
    * Multiplies two BigFraction
    */
-   public BigFraction multiply(BigFraction multiplyMe){
+  public BigFraction multiply(BigFraction multiplyMe){
     BigInteger resultNum, resultDenom;
 
     resultNum = this.num.multiply(multiplyMe.num);
@@ -157,7 +160,7 @@ public class BigFraction {
   }
   
   /**
-   * Convert this fraction to a string for ease of printing.
+   * Convert this Bigfraction to a string for ease of printing.
    */
   public String toString() {
     if (this.num.equals(BigInteger.ZERO)) {
