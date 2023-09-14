@@ -57,6 +57,11 @@ public class BigFraction {
    *
    *//* */
   public BigFraction(String str) {
+    if(str.equals("0")){
+      this.num = BigInteger.valueOf(0);
+      this.denom = BigInteger.valueOf(0);
+    }
+    else{
     int i = str.indexOf("/");
     String numStr = str.substring(0, i);
     int num = Integer.parseInt(numStr);
@@ -65,6 +70,7 @@ public class BigFraction {
 
     this.num = BigInteger.valueOf(num);
     this.denom = BigInteger.valueOf(denom);
+    }
   } // BigFraction (String str) */
 
   
@@ -153,10 +159,15 @@ public class BigFraction {
   public BigFraction subtract(BigFraction subtractMe){
     BigInteger resultNum, resultDenom;
 
-    resultNum = this.num.subtract(subtractMe.num);
-    resultDenom = this.denom.subtract(subtractMe.denom);
-
-    return new BigFraction(resultNum, resultDenom);
+    if(this.denom == subtractMe.denom){
+      resultNum = this.num.subtract(subtractMe.num);
+      resultDenom = this.denom;
+      return new BigFraction(resultNum, resultDenom);
+    }
+    else{
+      resultDenom = this.denom.multiply(subtractMe.denom);
+      BigInteger temp = 
+    }
   }
   
   /**

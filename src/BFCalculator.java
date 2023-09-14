@@ -1,5 +1,4 @@
 import java.io.PrintWriter;
-package mini project 2.src;
 
 /**
  * Implementation of evaluate and store.
@@ -10,7 +9,7 @@ package mini project 2.src;
 
 public class BFCalculator {
 
-  PrintWriter pen = new PrintWriter(System.out, true);
+PrintWriter pen = new PrintWriter(System.out, true);
 
 // +---------+------------------------------------------------------
 // | Methods |
