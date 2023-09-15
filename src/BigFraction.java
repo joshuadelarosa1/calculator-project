@@ -80,22 +80,6 @@ public class BigFraction {
       } //if... else
     } // if... else
   } // BigFraction (String str) */
-
-  /* if(num == 0){
-        this.num = BigInteger.valueOf(0);
-        this.denom = BigInteger.valueOf(0);
-        }
-      else{
-
-        if(denom != 0){
-          this.denom = BigInteger.valueOf(denom);
-        }
-        else{
-          this.denom = BigInteger.valueOf(1);
-        } //if...else
-      } //if... else
-    } */
-
   
 
   // +---------+------------------------------------------------------
@@ -138,11 +122,9 @@ public class BigFraction {
    */
   public BigFraction divide(BigFraction divideMe){
     BigInteger resultNum, resultDenom;
-    BigInteger reciprocalNum = divideMe.denom;
-    BigInteger reciprocalDenom = divideMe.num;
 
-    resultNum = this.num.multiply(reciprocalNum);
-    resultDenom = this.denom.multiply(reciprocalDenom);
+    resultNum = this.num.multiply(divideMe.denom);
+    resultDenom = this.denom.multiply(divideMe.num);
 
     return new BigFraction(resultNum, resultDenom);
   } // divide(BigFraction divideMe)
