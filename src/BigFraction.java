@@ -55,7 +55,7 @@ public class BigFraction {
   /**
    * Build a new fraction by parsing a string.
    *
-   *//* */
+   */
   public BigFraction(String str) {
     if(str.equals("0")){
       this.num = BigInteger.valueOf(0);
@@ -154,6 +154,27 @@ public class BigFraction {
   } // numerator()
 
   /**
+   * 
+   * reduces a fraction to the simplest form
+   */
+  public BigFraction reduce(){
+    BigInteger resultNum, resultDenom;
+    BigInteger BCD = BigInteger.valueOf(1);
+
+    for(BigInteger i = BigInteger.valueOf(1); (i.compareTo(this.num.min(this.denom))) <= 0; 
+        i = i.add(BigInteger.valueOf(1))){
+          if(((this.num.mod(i)) == BigInteger.valueOf(0)) && 
+            ((this.denom.mod(i)) == BigInteger.valueOf(0))){
+              BCD = i;
+            }
+          }
+
+    resultNum = this.num.divide(BCD);
+    resultDenom = this.denom.divide(BCD);
+    return new BigFraction(resultNum, resultDenom);
+  } // reduce()
+
+  /**
    * Subtracts two BigFractions.
    */
   public BigFraction subtract(BigFraction subtractMe){
@@ -165,10 +186,12 @@ public class BigFraction {
       return new BigFraction(resultNum, resultDenom);
     }
     else{
+      resultNum = (this.num.multiply(subtractMe.denom)).subtract(subtractMe.num.multiply(this.denom));
       resultDenom = this.denom.multiply(subtractMe.denom);
-      BigInteger temp = 
-    }
-  }
+      return new BigFraction(resultNum, resultDenom);
+
+    } // if...else
+  } // subtract(BigFraction subtractMe)
   
   /**
    * Convert this Bigfraction to a string for ease of printing.

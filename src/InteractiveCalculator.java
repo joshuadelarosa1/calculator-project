@@ -22,5 +22,4 @@ public class InteractiveCalculator {
     //not yet implemented
   } // main(String[] args)
   
-  
 } // class InteractiveCalculator

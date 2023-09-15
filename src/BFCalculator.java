@@ -32,16 +32,16 @@ PrintWriter pen = new PrintWriter(System.out, true);
         BigFraction nextBF = new BigFraction(expSplit[i+1]);
 
         if(expSplit[i].equals("+")){
-          result = previousBF.add(nextBF);
+          result = (previousBF.add(nextBF)).reduce();
         }
         else if(expSplit[i].equals("-")){
-          result = previousBF.subtract(nextBF);
+          result = (previousBF.subtract(nextBF)).reduce();
         }
         else if(expSplit[i].equals("/")){
-          result = previousBF.divide(nextBF);
+          result = (previousBF.divide(nextBF)).reduce();
         }
         else if(expSplit[i].equals("*")){
-          result = previousBF.multiply(nextBF);
+          result = (previousBF.multiply(nextBF)).reduce();
         }
 
         String resultString = result.toString();
@@ -71,30 +71,3 @@ PrintWriter pen = new PrintWriter(System.out, true);
   }
 
 }
-
-/*
- *
- * test code:
- *      int i = 0;
-    BigFraction[] fractions = new BigFraction[exp.length()];
-    String[] expSplit = exp.split(" ");
-    String[] operations;
-
-    for(String split : expSplit){
-      if(isOperation(split)){
-        operations[i] = split;
-      }
-      else{
-        fractions[i] = new BigFraction(split); 
-      } // if... else
-      i++;
-    } // for
-
-    for(BigFraction fraction : fractions){
-      if(operations[j].equals("+")){
-        fractions[j] = fractions[j].add(fractions[j+1]);
-      }
-    }
-
-    return ;
- */
