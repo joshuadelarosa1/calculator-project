@@ -62,16 +62,39 @@ public class BigFraction {
       this.denom = BigInteger.valueOf(0);
     }
     else{
-    int i = str.indexOf("/");
-    String numStr = str.substring(0, i);
-    int num = Integer.parseInt(numStr);
-    String denomStr = str.substring(i+1, str.length());
-    int denom = Integer.parseInt(denomStr);
+      if(str.contains("/")){
+        int i = str.indexOf("/");
+        String numStr = str.substring(0, i);
+        int num = Integer.parseInt(numStr);
+        String denomStr = str.substring(i+1, str.length());
+        int denom = Integer.parseInt(denomStr);
 
-    this.num = BigInteger.valueOf(num);
-    this.denom = BigInteger.valueOf(denom);
-    }
+        this.num = BigInteger.valueOf(num);
+        this.denom = BigInteger.valueOf(denom);
+      }
+      else{
+        int num = Integer.parseInt(str);
+
+        this.num = BigInteger.valueOf(num);
+        this.denom = BigInteger.valueOf(1);
+      } //if... else
+    } // if... else
   } // BigFraction (String str) */
+
+  /* if(num == 0){
+        this.num = BigInteger.valueOf(0);
+        this.denom = BigInteger.valueOf(0);
+        }
+      else{
+
+        if(denom != 0){
+          this.denom = BigInteger.valueOf(denom);
+        }
+        else{
+          this.denom = BigInteger.valueOf(1);
+        } //if...else
+      } //if... else
+    } */
 
   
 
@@ -115,9 +138,11 @@ public class BigFraction {
    */
   public BigFraction divide(BigFraction divideMe){
     BigInteger resultNum, resultDenom;
+    BigInteger reciprocalNum = divideMe.denom;
+    BigInteger reciprocalDenom = divideMe.num;
 
-    resultNum = this.num.divide(divideMe.num);
-    resultDenom = this.denom.divide(divideMe.denom);
+    resultNum = this.num.multiply(reciprocalNum);
+    resultDenom = this.denom.multiply(reciprocalDenom);
 
     return new BigFraction(resultNum, resultDenom);
   } // divide(BigFraction divideMe)
