@@ -16,7 +16,7 @@ public class InteractiveCalculator {
     PrintWriter pen = new PrintWriter(System.out, true);
     BFCalculator calc = new BFCalculator();
 
-    String str = calc.evaluate("1 + 5/6 / 2");
+    String str = calc.evaluate("1 + 5/6 / 2 STORE a");
     pen.println(str);
 
     //not yet implemented
