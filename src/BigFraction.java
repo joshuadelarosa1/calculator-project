@@ -204,14 +204,17 @@ public class BigFraction {
    * Convert this Bigfraction to a string for ease of printing.
    */
   public String toString() {
-    if (this.num.equals(BigInteger.ZERO)) {
+    if(this.num.equals(BigInteger.ZERO)) {
       return "0";
     } // if
 
     // Lump together the string represention of the numerator,
     // a slash, and the string representation of the denominator
-    // return this.num.toString().concat("/").concat(this.denom.toString());
+    if(!this.denom.equals(1))
     return this.num + "/" + this.denom;
+
+    else
+    return "" + this.num;
   } // toString()
 
 } // class BigFraction

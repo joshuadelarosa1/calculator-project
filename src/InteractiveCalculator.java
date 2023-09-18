@@ -1,4 +1,5 @@
 import java.io.PrintWriter;
+import java.util.Scanner;
 /**
  * Main that reads multiple lines of operations
  * from the user, computes, and prints the answers.
@@ -14,12 +15,25 @@ public class InteractiveCalculator {
   public static void main(String[] args) throws Exception{
 
     PrintWriter pen = new PrintWriter(System.out, true);
+    Scanner scan = new Scanner(System.in);
     BFCalculator calc = new BFCalculator();
+    String input;
 
-    String str = calc.evaluate("1 + 5/6 / 2 STORE a a + a STORE b b - b");
-    pen.println(str);
+    pen.println("Hello! This program will do basic math arithmatic using Big Fractions.");
+    pen.println("You can use STORE to store the previous value & QUIT will exit the program");
 
-    //not yet implemented
+    do{
+    input = scan.nextLine();
+
+    String result = calc.evaluate(input);
+
+    if(!result.equals("STORE COMPLETE") && !input.equals("QUIT"))
+    pen.println(result);
+
+    }while(!input.equals("QUIT")); //do...while
+
+    scan.close();
+
   } // main(String[] args)
   
 } // class InteractiveCalculator

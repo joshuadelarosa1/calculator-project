@@ -15,15 +15,17 @@ public class QuickCalculator {
   public static void main(String[] args) throws Exception{
 
     PrintWriter pen = new PrintWriter(System.out, true);
-    pen.println("test");
+    BFCalculator calc = new BFCalculator();
+    String runningTotal = "0";
+    
+    for(int i = 0; i < args.length; i++){
+      String result = calc.evaluate(args[i]);
 
-    String hey = "1/7 + 1/9 - 2/9";
-    String[] heySplit = hey.split(" ");
-    for(String split : heySplit){
-      pen.println(split);
+      if(!result.equals("STORE COMPLETE"))
+      runningTotal = result;
     }
-
-    //not yet implemented
+   
+    pen.println(runningTotal);
   } // main(String[] args)
   
 }

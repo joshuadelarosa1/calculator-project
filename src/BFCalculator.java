@@ -1,4 +1,3 @@
-import java.io.PrintWriter;
 /**
  * Implementation of evaluate and store.
  * 
@@ -8,11 +7,10 @@ import java.io.PrintWriter;
 
 public class BFCalculator {
 
-PrintWriter pen = new PrintWriter(System.out, true);
 String runningTotal;
 int base = (int) 'a';
 int length = 26;
-String[] fractions = new String[length];
+String[] fractions = new String[length+1];
 
 // +---------+------------------------------------------------------
 // | Methods |
@@ -24,9 +22,7 @@ String[] fractions = new String[length];
   public String evaluate(String exp){
     
     String[] expSplit = exp.split(" ");
-    runningTotal = expSplit[0];
     BigFraction result = new BigFraction("0");
-
     for(int i = 0; i < expSplit.length; i++){
 
       if(!isOperation(expSplit[i])){
@@ -36,37 +32,41 @@ String[] fractions = new String[length];
         if(expSplit[i].equals("STORE") && !expSplit[i+1].equals(" ")){
           char register = expSplit[i+1].charAt(0);
           store(register);
+
+          return "STORE COMPLETE";
         }
         else{
           if(!expSplit[i+1].equals(" ")){
-            if(expSplit[i].matches("[a-z]") && expSplit[i+1].matches("[a-z]")){
-              BigFraction previousBF = new BigFraction(fractions[(expSplit[i].charAt(0) - base)]);
+            if(expSplit[i-1].matches("[a-z]") && expSplit[i+1].matches("[a-z]")){
+              BigFraction previousBF = new BigFraction(fractions[(expSplit[i-1].charAt(0) - base)]);
               BigFraction nextBF = new BigFraction(fractions[(expSplit[i+1].charAt(0) - base)]);
 
               result = evaluateHelper(expSplit, i, previousBF, nextBF);
-
+              expSplit[i+1] = result.toString();
             }
-            else if(expSplit[i].matches("[a-z]")){
-              BigFraction previousBF = new BigFraction(fractions[(expSplit[i].charAt(0) - base)]);
+            else if(expSplit[i-1].matches("[a-z]")){
+              BigFraction previousBF = new BigFraction(fractions[(expSplit[i-1].charAt(0) - base)]);
               BigFraction nextBF = new BigFraction(expSplit[i+1]);
 
               result = evaluateHelper(expSplit, i, previousBF, nextBF);
+              expSplit[i+1] = result.toString();
             } // else if
             else if(expSplit[i+1].matches("[a-z]")){
-              BigFraction previousBF = new BigFraction(runningTotal);
+              BigFraction previousBF = new BigFraction(expSplit[i-1]);
               BigFraction nextBF = new BigFraction(fractions[(expSplit[i+1].charAt(0) - base)]);
 
               result = evaluateHelper(expSplit, i, previousBF, nextBF);
+              expSplit[i+1] = result.toString();
             } // else if
             else{
-              BigFraction previousBF = new BigFraction(runningTotal);
+              BigFraction previousBF = new BigFraction(expSplit[i-1]);
               BigFraction nextBF = new BigFraction(expSplit[i+1]);
 
               result = evaluateHelper(expSplit, i, previousBF, nextBF);
+              expSplit[i+1] = result.toString();
             } // if...else
 
-          String resultString = result.toString();
-          runningTotal = resultString;
+          runningTotal = result.toString();
           }
           else
           return runningTotal; // if...else if...else
@@ -88,18 +88,21 @@ String[] fractions = new String[length];
     BigFraction result = new BigFraction("0");
 
     if(expSplit[i].equals("+")){
-      return result = (previousBF.add(nextBF)).reduce();
+      result = (previousBF.add(nextBF)).reduce();
     } // if
     else if(expSplit[i].equals("-")){
-      return result = (previousBF.subtract(nextBF)).reduce();
+      result = (previousBF.subtract(nextBF)).reduce();
+      expSplit[i-1] = result.toString();
     } // else if
     else if(expSplit[i].equals("/")){
-      return result = (previousBF.divide(nextBF)).reduce();
+      result = (previousBF.divide(nextBF)).reduce();
+      expSplit[i-1] = result.toString();
     } // else if
     else if(expSplit[i].equals("*")){
-      return result = (previousBF.multiply(nextBF)).reduce();
+      result = (previousBF.multiply(nextBF)).reduce();
+      expSplit[i-1] = result.toString();
     } // else if
-
+  
     return result;
   } // evaluateHelper(String[] expSplit, int i, BigFraction previousBF, BigFraction nextBF)
 
