@@ -7,70 +7,68 @@
 
 public class BFCalculator {
 
-String runningTotal;
-int base = (int) 'a';
-int length = 26;
-String[] fractions = new String[length+1];
+  String runningTotal;
+  int base = (int) 'a';
+  int length = 26;
+  String[] fractions = new String[length + 1];
 
-// +---------+------------------------------------------------------
-// | Methods |
-// +---------+
+  // +---------+------------------------------------------------------
+  // | Methods |
+  // +---------+
 
   /*
    * Evaluate directs the majority of the arithmetic
    */
-  public String evaluate(String exp){
-    
+  public String evaluate(String exp) {
+
     String[] expSplit = exp.split(" ");
     BigFraction result = new BigFraction("0");
-    for(int i = 0; i < expSplit.length; i++){
+    for (int i = 0; i < expSplit.length; i++) {
 
-      if(!isOperation(expSplit[i])){
+      if (!isOperation(expSplit[i])) {
         continue;
-      }
-      else{
-        if(expSplit[i].equals("STORE") && !expSplit[i+1].equals(" ")){
-          char register = expSplit[i+1].charAt(0);
+      } else {
+        if (expSplit[i].equals("STORE") && !expSplit[i + 1].equals(" ")) {
+          char register = expSplit[i + 1].charAt(0);
           store(register);
 
           return "STORE COMPLETE";
-        }
-        else{
-          if(!expSplit[i+1].equals(" ")){
-            if(expSplit[i-1].matches("[a-z]") && expSplit[i+1].matches("[a-z]")){
-              BigFraction previousBF = new BigFraction(fractions[(expSplit[i-1].charAt(0) - base)]);
-              BigFraction nextBF = new BigFraction(fractions[(expSplit[i+1].charAt(0) - base)]);
+        } else {
+          if (!expSplit[i + 1].equals(" ")) {
+            if (expSplit[i - 1].matches("[a-z]") && expSplit[i + 1].matches("[a-z]")) {
+              BigFraction previousBF =
+                  new BigFraction(fractions[(expSplit[i - 1].charAt(0) - base)]);
+              BigFraction nextBF = new BigFraction(fractions[(expSplit[i + 1].charAt(0) - base)]);
 
               result = evaluateHelper(expSplit, i, previousBF, nextBF);
-              expSplit[i+1] = result.toString();
-            }
-            else if(expSplit[i-1].matches("[a-z]")){
-              BigFraction previousBF = new BigFraction(fractions[(expSplit[i-1].charAt(0) - base)]);
-              BigFraction nextBF = new BigFraction(expSplit[i+1]);
+              expSplit[i + 1] = result.toString();
+            } else if (expSplit[i - 1].matches("[a-z]")) {
+              BigFraction previousBF =
+                  new BigFraction(fractions[(expSplit[i - 1].charAt(0) - base)]);
+              BigFraction nextBF = new BigFraction(expSplit[i + 1]);
 
               result = evaluateHelper(expSplit, i, previousBF, nextBF);
-              expSplit[i+1] = result.toString();
+              expSplit[i + 1] = result.toString();
             } // else if
-            else if(expSplit[i+1].matches("[a-z]")){
-              BigFraction previousBF = new BigFraction(expSplit[i-1]);
-              BigFraction nextBF = new BigFraction(fractions[(expSplit[i+1].charAt(0) - base)]);
+            else if (expSplit[i + 1].matches("[a-z]")) {
+              BigFraction previousBF = new BigFraction(expSplit[i - 1]);
+              BigFraction nextBF = new BigFraction(fractions[(expSplit[i + 1].charAt(0) - base)]);
 
               result = evaluateHelper(expSplit, i, previousBF, nextBF);
-              expSplit[i+1] = result.toString();
+              expSplit[i + 1] = result.toString();
             } // else if
-            else{
-              BigFraction previousBF = new BigFraction(expSplit[i-1]);
-              BigFraction nextBF = new BigFraction(expSplit[i+1]);
+            else {
+              BigFraction previousBF = new BigFraction(expSplit[i - 1]);
+              BigFraction nextBF = new BigFraction(expSplit[i + 1]);
 
               result = evaluateHelper(expSplit, i, previousBF, nextBF);
-              expSplit[i+1] = result.toString();
+              expSplit[i + 1] = result.toString();
             } // if...else
 
-          runningTotal = result.toString();
-          }
-          else
-          return runningTotal; // if...else if...else
-          
+            runningTotal = result.toString();
+          } else
+            return runningTotal; // if...else if...else
+
         } // if...else
       } // if...else
 
@@ -83,54 +81,54 @@ String[] fractions = new String[length+1];
   /*
    * A helper for evaluate
    */
-  public BigFraction evaluateHelper(String[] expSplit, int i, BigFraction previousBF, BigFraction nextBF){
+  public BigFraction evaluateHelper(String[] expSplit, int i, BigFraction previousBF,
+      BigFraction nextBF) {
 
     BigFraction result = new BigFraction("0");
 
-    if(expSplit[i].equals("+")){
+    if (expSplit[i].equals("+")) {
       result = (previousBF.add(nextBF)).reduce();
     } // if
-    else if(expSplit[i].equals("-")){
+    else if (expSplit[i].equals("-")) {
       result = (previousBF.subtract(nextBF)).reduce();
-      expSplit[i-1] = result.toString();
+      expSplit[i - 1] = result.toString();
     } // else if
-    else if(expSplit[i].equals("/")){
+    else if (expSplit[i].equals("/")) {
       result = (previousBF.divide(nextBF)).reduce();
-      expSplit[i-1] = result.toString();
+      expSplit[i - 1] = result.toString();
     } // else if
-    else if(expSplit[i].equals("*")){
+    else if (expSplit[i].equals("*")) {
       result = (previousBF.multiply(nextBF)).reduce();
-      expSplit[i-1] = result.toString();
+      expSplit[i - 1] = result.toString();
     } // else if
-  
+
     return result;
   } // evaluateHelper(String[] expSplit, int i, BigFraction previousBF, BigFraction nextBF)
 
   /*
    * Tests if a string is an operation
    */
-  public boolean isOperation(String val){
-    if(val.equals("+") || val.equals("-")
-      || val.equals("*") || val.equals("/")
-      || val.equals("STORE"))
-    return true;
+  public boolean isOperation(String val) {
+    if (val.equals("+") || val.equals("-") || val.equals("*") || val.equals("/")
+        || val.equals("STORE"))
+      return true;
     else
-    return false; //if...else
+      return false; // if...else
   } // isOperation(String val)
 
   /*
    * function that stores previous computed value with an associated key
    */
-  public void store(char register){
-    
-    if(!Character.isAlphabetic(register) || !Character.isLowerCase(register)){
-      System.err.println("You may only store into alphabetic lowercase characters. Please try agian");
+  public void store(char register) {
+
+    if (!Character.isAlphabetic(register) || !Character.isLowerCase(register)) {
+      System.err
+          .println("You may only store into alphabetic lowercase characters. Please try agian");
       System.exit(1);
-    }
-    else{
+    } else {
       fractions[register - base] = runningTotal;
     } // if...else
-    
+
   }
 
 } // class BFCalculator

@@ -1,5 +1,4 @@
 import java.math.BigInteger;
-
 /**
  * A simple implementation of BigFractions.
  * 
@@ -12,12 +11,11 @@ public class BigFraction {
   // | Design Decisions |
   // +------------------+
   /*
-   * (1) Denominators are always positive. Therefore, negative fractions are represented 
-   * with a negative numerator. Similarly, if a fraction has a negative numerator, it 
-   * is negative.
+   * (1) Denominators are always positive. Therefore, negative fractions are represented with a
+   * negative numerator. Similarly, if a fraction has a negative numerator, it is negative.
    * 
-   * (2) BigFractions are not necessarily stored in simplified form. To obtain a fraction 
-   * in simplified form, one must call the `simplify` method.
+   * (2) BigFractions are not necessarily stored in simplified form. To obtain a fraction in
+   * simplified form, one must call the `simplify` method.
    */
 
   // +--------+-------------------------------------------------------
@@ -57,30 +55,28 @@ public class BigFraction {
    *
    */
   public BigFraction(String str) {
-    if(str.equals("0")){
+    if (str.equals("0")) {
       this.num = BigInteger.valueOf(0);
       this.denom = BigInteger.valueOf(0);
-    }
-    else{
-      if(str.contains("/")){
+    } else {
+      if (str.contains("/")) {
         int i = str.indexOf("/");
         String numStr = str.substring(0, i);
         int num = Integer.parseInt(numStr);
-        String denomStr = str.substring(i+1, str.length());
+        String denomStr = str.substring(i + 1, str.length());
         int denom = Integer.parseInt(denomStr);
 
         this.num = BigInteger.valueOf(num);
         this.denom = BigInteger.valueOf(denom);
-      }
-      else{
+      } else {
         int num = Integer.parseInt(str);
 
         this.num = BigInteger.valueOf(num);
         this.denom = BigInteger.valueOf(1);
-      } //if... else
+      } // if... else
     } // if... else
   } // BigFraction (String str) */
-  
+
 
   // +---------+------------------------------------------------------
   // | Methods |
@@ -120,7 +116,7 @@ public class BigFraction {
   /**
    * Divides Big Fractions.
    */
-  public BigFraction divide(BigFraction divideMe){
+  public BigFraction divide(BigFraction divideMe) {
     BigInteger resultNum, resultDenom;
 
     resultNum = this.num.multiply(divideMe.denom);
@@ -132,7 +128,7 @@ public class BigFraction {
   /**
    * Returns values as a fraction.
    */
-  public BigFraction fractional(){
+  public BigFraction fractional() {
     BigInteger resultNum, resultDenom;
 
     resultNum = this.num.mod(this.denom);
@@ -144,7 +140,7 @@ public class BigFraction {
   /**
    * Multiplies two BigFraction
    */
-  public BigFraction multiply(BigFraction multiplyMe){
+  public BigFraction multiply(BigFraction multiplyMe) {
     BigInteger resultNum, resultDenom;
 
     resultNum = this.num.multiply(multiplyMe.num);
@@ -152,7 +148,7 @@ public class BigFraction {
 
     return new BigFraction(resultNum, resultDenom);
   } // multiply(BigFraction multiplyMe)
-  
+
   /**
    * Get the numerator of this BigFraction.
    */
@@ -164,17 +160,17 @@ public class BigFraction {
    * 
    * reduces a fraction to the simplest form
    */
-  public BigFraction reduce(){
+  public BigFraction reduce() {
     BigInteger resultNum, resultDenom;
     BigInteger BCD = BigInteger.valueOf(1);
 
-    for(BigInteger i = BigInteger.valueOf(1); (i.compareTo(this.num.min(this.denom))) <= 0; 
-        i = i.add(BigInteger.valueOf(1))){
-          if(((this.num.mod(i)) == BigInteger.valueOf(0)) && 
-            ((this.denom.mod(i)) == BigInteger.valueOf(0))){
-              BCD = i;
-            }
-          }
+    for (BigInteger i = BigInteger.valueOf(1); (i.compareTo(this.num.min(this.denom))) <= 0; i =
+        i.add(BigInteger.valueOf(1))) {
+      if (((this.num.mod(i)) == BigInteger.valueOf(0))
+          && ((this.denom.mod(i)) == BigInteger.valueOf(0))) {
+        BCD = i;
+      }
+    }
 
     resultNum = this.num.divide(BCD);
     resultDenom = this.denom.divide(BCD);
@@ -184,37 +180,37 @@ public class BigFraction {
   /**
    * Subtracts two BigFractions.
    */
-  public BigFraction subtract(BigFraction subtractMe){
+  public BigFraction subtract(BigFraction subtractMe) {
     BigInteger resultNum, resultDenom;
 
-    if(this.denom == subtractMe.denom){
+    if (this.denom == subtractMe.denom) {
       resultNum = this.num.subtract(subtractMe.num);
       resultDenom = this.denom;
       return new BigFraction(resultNum, resultDenom);
-    }
-    else{
-      resultNum = (this.num.multiply(subtractMe.denom)).subtract(subtractMe.num.multiply(this.denom));
+    } else {
+      resultNum =
+          (this.num.multiply(subtractMe.denom)).subtract(subtractMe.num.multiply(this.denom));
       resultDenom = this.denom.multiply(subtractMe.denom);
       return new BigFraction(resultNum, resultDenom);
 
     } // if...else
   } // subtract(BigFraction subtractMe)
-  
+
   /**
    * Convert this Bigfraction to a string for ease of printing.
    */
   public String toString() {
-    if(this.num.equals(BigInteger.ZERO)) {
+    if (this.num.equals(BigInteger.ZERO)) {
       return "0";
     } // if
 
     // Lump together the string represention of the numerator,
     // a slash, and the string representation of the denominator
-    if(!this.denom.equals(1))
-    return this.num + "/" + this.denom;
+    if (!this.denom.equals(1))
+      return this.num + "/" + this.denom;
 
     else
-    return "" + this.num;
+      return "" + this.num;
   } // toString()
 
 } // class BigFraction
