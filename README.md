@@ -1,18 +1,5 @@
-## Getting Started
+Name: Joshua De La Rosa
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Short description: A basic calculator that uses the Big Fractions type as the base of it's operations. The calculations are made left to right, with no prority or order of operations. Interactive calculator uses inputs from the user as it reads lines over and over, quick calculator takes in all it's inputs on one line.
 
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Resources: Prof Sam R, Alma Ordaz helped me think out some of the STORE function, used the lab that me and Jinny worked on.
