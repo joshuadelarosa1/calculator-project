@@ -1,4 +1,5 @@
 import java.math.BigInteger;
+
 /**
  * A simple implementation of BigFractions.
  * 
@@ -76,7 +77,6 @@ public class BigFraction {
       } // if... else
     } // if... else
   } // BigFraction (String str) */
-
 
   // +---------+------------------------------------------------------
   // | Methods |

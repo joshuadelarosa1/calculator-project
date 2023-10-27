@@ -1,3 +1,5 @@
+import java.math.BigInteger;
+
 /**
  * Implementation of evaluate and store.
  * 
@@ -22,6 +24,19 @@ public class BFCalculator {
   public String evaluate(String exp) {
 
     String[] expSplit = exp.split(" ");
+
+    if (expSplit[0].equals("QUIT")) {
+      System.out.println("This was the last value computed: " + runningTotal);
+      System.out.println("Successful Exit");
+      System.exit(0);
+    }
+
+    if (!isOperation(expSplit[1]) && !Character.isAlphabetic(expSplit[1].charAt(0))) {
+      System.err.println("You have not entered the inputs in the correct order.");
+      System.err.println("Try again.");
+      System.exit(1);
+    }
+
     BigFraction result = new BigFraction("0");
     for (int i = 0; i < expSplit.length; i++) {
 
@@ -29,6 +44,10 @@ public class BFCalculator {
         continue;
       } else {
         if (expSplit[i].equals("STORE") && !expSplit[i + 1].equals(" ")) {
+          if (runningTotal == null) {
+            System.err.println("There is nothing to store. Try again.");
+            System.exit(1);
+          }
           char register = expSplit[i + 1].charAt(0);
           store(register);
 
@@ -65,7 +84,13 @@ public class BFCalculator {
               expSplit[i + 1] = result.toString();
             } // if...else
 
-            runningTotal = result.toString();
+            if (result.denominator().intValue() == 1) {
+              String tempNum = result.numerator().toString();
+              runningTotal = tempNum;
+            } // if
+            else {
+              runningTotal = result.toString();
+            } // else
           } else
             return runningTotal; // if...else if...else
 
