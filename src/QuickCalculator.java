@@ -18,7 +18,7 @@ public class QuickCalculator {
     BFCalculator calc = new BFCalculator();
     String runningTotal = "0";
 
-    if(args[0].length() <= 1) {
+    if (args[0].length() <= 1) {
       System.err.println("You did not enter a correct number of inputs");
       System.err.println("Here is what you entered: " + args[0]);
       System.exit(1);

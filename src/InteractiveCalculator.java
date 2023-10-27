@@ -25,7 +25,7 @@ public class InteractiveCalculator {
     do {
       input = scan.nextLine();
 
-      if(input.length() <= 1) {
+      if (input.length() <= 1) {
         System.err.println("You did not enter a correct number of inputs");
         System.err.println("Here is what you entered: " + input);
         System.exit(1);
